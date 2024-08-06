@@ -7,28 +7,42 @@
 
 import SwiftUI
 import SwiftData
+import Algorithms
 
 struct ContentView: View {
 
+    let calendar = Calendar.current
     // To delete we need access to the context
     @Environment(\.modelContext) var context
     @State private var isShowingItemSheet = false
     // Fetch
-    @Query(sort: \Expense.date) 
+    @Query(sort: \Expense.date)
     // Fetch filtering
 //    @Query(filter: #Predicate<Expense> { $0.value > 100 }, sort: \Expense.date)
-    var expenses: [Expense] // not needed anymore = []
+//    var expenses: [Expense] // not needed anymore = []
+    var expenses: [Expense]
+    
+    var chunkedExpenses: [[Expense]] {
+        let chunkedExpenses = expenses.chunked { calendar.isDate($0.date, equalTo: $1.date, toGranularity: .month) }
+        return chunkedExpenses.map { Array($0) }
+    }
     // Editing
     @State private var expenseToEdit: Expense?
 
     var body: some View {
         NavigationStack {
             List {
-                ForEach(expenses) { expense in
-                    ExpenseCell(expense: expense)
-                        .onTapGesture {
-                            expenseToEdit = expense
+                ForEach(chunkedExpenses, id: \.self) { expenses in
+                    DisclosureGroup {
+                        ForEach(expenses) { expense in
+                            ExpenseCell(expense: expense)
+                                .onTapGesture {
+                                    expenseToEdit = expense
+                                }
                         }
+                    } label: {
+                        Text(expenses.first!.date.formatted(.dateTime.month(.wide)))
+                    }
                 }
                 .onDelete { indexSet in
                     for index in indexSet {
