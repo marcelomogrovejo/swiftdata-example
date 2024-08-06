@@ -9,13 +9,14 @@ import Foundation
 import SwiftData
 
 @Model
-class Expense {
-    var name: String
+class Expense: Hashable, Identifiable {
+    var id = UUID()
+    var title: String
     var date: Date
     var value: Double
 
-    init(name: String, date: Date, value: Double) {
-        self.name = name
+    init(title: String, date: Date, value: Double) {
+        self.title = title
         self.date = date
         self.value = value
     }
