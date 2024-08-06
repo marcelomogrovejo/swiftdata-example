@@ -8,6 +8,7 @@
 import SwiftUI
 import SwiftData
 import Algorithms
+import Charts
 
 struct ContentView: View {
 
@@ -17,12 +18,13 @@ struct ContentView: View {
     @Environment(\.modelContext) var context
     @State private var isShowingItemSheet = false
     // Fetch
-    @Query(sort: \Expense.date)
+//    @Query(sort: \Expense.date)
+    @Query
     // Fetch filtering
 //    @Query(filter: #Predicate<Expense> { $0.value > 100 }, sort: \Expense.date)
 //    var expenses: [Expense] // not needed anymore = []
     var expenses: [Expense]
-    
+
     var chunkedExpenses: [[Expense]] {
         let chunkedExpenses = expenses.chunked { calendar.isDate($0.date, equalTo: $1.date, toGranularity: .month) }
         return chunkedExpenses.map { Array($0) }
@@ -32,6 +34,21 @@ struct ContentView: View {
 
     var body: some View {
         NavigationStack {
+            VStack {
+                Chart {
+                    ForEach(expenses) { expense in
+                        BarMark(
+                            x: .value("Month", expense.date, unit: .month),
+                            y: .value("Amount", expense.value)
+                        )
+                    }
+                }
+                .frame(height: 180)
+                .padding(20)
+
+                Text("Hola mundo")
+            }
+            
             List {
                 ForEach(chunkedExpenses, id: \.self) { expenses in
                     DisclosureGroup {
@@ -82,5 +99,13 @@ struct ContentView: View {
 }
 
 #Preview {
-    ContentView()
+    let config = ModelConfiguration(isStoredInMemoryOnly: true)
+    let container = try! ModelContainer(for: Expense.self, configurations: config)
+    for i in 1...12 {
+        let randomDouble = Double.random(in: 10...100)
+        let expnese = Expense(title: "Expense \(i)", date: Date.from(year: 2023, month: i, day: 1), value: randomDouble)
+        container.mainContext.insert(expnese)
+    }
+
+    return ContentView().modelContainer(container)
 }
