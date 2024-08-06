@@ -112,14 +112,12 @@
 		BD73F7C92C529C08002B1DAB /* SwiftDataExmpl */ = {
 			isa = PBXGroup;
 			children = (
+				BDD9838E2C6240D300209C7B /* ViewModel */,
+				BDD9838D2C6240CA00209C7B /* View */,
+				BDD9838B2C6240A800209C7B /* Model */,
 				BD73F7CA2C529C08002B1DAB /* SwiftDataExmplApp.swift */,
-				BD73F7CC2C529C08002B1DAB /* ContentView.swift */,
 				BD73F7CE2C529C0B002B1DAB /* Assets.xcassets */,
 				BD73F7D02C529C0B002B1DAB /* Preview Content */,
-				BD73F7F42C529C39002B1DAB /* Expense.swift */,
-				BDD9837F2C62184300209C7B /* ExpenseCell.swift */,
-				BDD983812C6218EA00209C7B /* AddExpenseSheet.swift */,
-				BDD983832C62192500209C7B /* UpdateExpenseSheet.swift */,
 			);
 			path = SwiftDataExmpl;
 			sourceTree = "<group>";
@@ -154,6 +152,40 @@
 			children = (
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		BDD9838B2C6240A800209C7B /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				BD73F7F42C529C39002B1DAB /* Expense.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		BDD9838C2C6240B300209C7B /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				BDD9837F2C62184300209C7B /* ExpenseCell.swift */,
+				BDD983812C6218EA00209C7B /* AddExpenseSheet.swift */,
+				BDD983832C62192500209C7B /* UpdateExpenseSheet.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		BDD9838D2C6240CA00209C7B /* View */ = {
+			isa = PBXGroup;
+			children = (
+				BDD9838C2C6240B300209C7B /* Components */,
+				BD73F7CC2C529C08002B1DAB /* ContentView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		BDD9838E2C6240D300209C7B /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

@@ -58,11 +58,10 @@ In order to delete an expense you should swipe left the list item and tap the re
 
 # Structure
 <p>🚧 In construction 🚧</p> 
-* "Extension": Extensions that are needed across multiple sections of the project. Such as date to string converters among others.
-* "UIComponents": Generic components needed across the project's views. Such as radio button and main button.
-* "ColorPalette": Color scheme assets used by the project. This includes a uicolor extension that helps to include those into the app without depending on the names.
-* "Resources": Non-code files that are needed across the project. Sush as images, animations, adio files, and other types of assets.
-* "Scene": Main folder of the app that includes the sections. Such as Task, List and Main. Each one has the same structure such as View, Model and ViewModel.
+* "ViewModel": .
+* "View": User interfaces like main view.
+* "Components": Sub views that main view includes like add and update sheets.
+* "Model": Entities needed by the app like expenses.
 
 # Running the tests
 <p>🚧 In construction 🚧</p>
