@@ -12,6 +12,7 @@ import Algorithms
 struct ContentView: View {
 
     let calendar = Calendar.current
+
     // To delete we need access to the context
     @Environment(\.modelContext) var context
     @State private var isShowingItemSheet = false

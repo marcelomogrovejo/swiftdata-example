@@ -55,6 +55,8 @@
 		BDD9837F2C62184300209C7B /* ExpenseCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpenseCell.swift; sourceTree = "<group>"; };
 		BDD983812C6218EA00209C7B /* AddExpenseSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddExpenseSheet.swift; sourceTree = "<group>"; };
 		BDD983832C62192500209C7B /* UpdateExpenseSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateExpenseSheet.swift; sourceTree = "<group>"; };
+		BDD983892C62247300209C7B /* TODO.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = TODO.md; sourceTree = "<group>"; };
+		BDD9838A2C62247E00209C7B /* LICENSE.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = LICENSE.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,6 +88,8 @@
 		BD73F7BE2C529C08002B1DAB = {
 			isa = PBXGroup;
 			children = (
+				BDD9838A2C62247E00209C7B /* LICENSE.md */,
+				BDD983892C62247300209C7B /* TODO.md */,
 				BD73F7F62C52AE7C002B1DAB /* README.md */,
 				BD73F7C92C529C08002B1DAB /* SwiftDataExmpl */,
 				BD73F7DA2C529C0C002B1DAB /* SwiftDataExmplTests */,
