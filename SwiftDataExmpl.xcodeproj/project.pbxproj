@@ -21,7 +21,6 @@
 		BDD983842C62192500209C7B /* UpdateExpenseSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD983832C62192500209C7B /* UpdateExpenseSheet.swift */; };
 		BDD983882C6220B500209C7B /* Algorithms in Frameworks */ = {isa = PBXBuildFile; productRef = BDD983872C6220B500209C7B /* Algorithms */; };
 		BDD983912C625A7700209C7B /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD983902C625A7700209C7B /* Date.swift */; };
-		BDD983932C62635E00209C7B /* SwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD983922C62635E00209C7B /* SwiftUIView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,7 +59,6 @@
 		BDD983892C62247300209C7B /* TODO.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = TODO.md; sourceTree = "<group>"; };
 		BDD9838A2C62247E00209C7B /* LICENSE.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = LICENSE.md; sourceTree = "<group>"; };
 		BDD983902C625A7700209C7B /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
-		BDD983922C62635E00209C7B /* SwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -182,7 +180,6 @@
 			children = (
 				BDD9838C2C6240B300209C7B /* Components */,
 				BD73F7CC2C529C08002B1DAB /* ContentView.swift */,
-				BDD983922C62635E00209C7B /* SwiftUIView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -341,7 +338,6 @@
 			files = (
 				BDD983802C62184300209C7B /* ExpenseCell.swift in Sources */,
 				BD73F7F52C529C39002B1DAB /* Expense.swift in Sources */,
-				BDD983932C62635E00209C7B /* SwiftUIView.swift in Sources */,
 				BDD983912C625A7700209C7B /* Date.swift in Sources */,
 				BD73F7CD2C529C08002B1DAB /* ContentView.swift in Sources */,
 				BDD983842C62192500209C7B /* UpdateExpenseSheet.swift in Sources */,

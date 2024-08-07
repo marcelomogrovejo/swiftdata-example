@@ -17,16 +17,22 @@ struct ContentView: View {
     // To delete we need access to the context
     @Environment(\.modelContext) var context
     @State private var isShowingItemSheet = false
-    // Fetch
-//    @Query(sort: \Expense.date)
-    @Query
-    // Fetch filtering
+    // Option 1 Fetch
+//    @Query
+    // Option 2 Fetch sorting
+    @Query(sort: \Expense.date)
+    // Option 3 Fetch filtering
 //    @Query(filter: #Predicate<Expense> { $0.value > 100 }, sort: \Expense.date)
 //    var expenses: [Expense] // not needed anymore = []
     var expenses: [Expense]
 
+    var filteredExpenses: [Expense] {
+        let currentYear = calendar.component(.year, from: .now)
+        return expenses.filter { calendar.component(.year, from: $0.date) == currentYear }
+    }
+    //
     var chunkedExpenses: [[Expense]] {
-        let chunkedExpenses = expenses.chunked { calendar.isDate($0.date, equalTo: $1.date, toGranularity: .month) }
+        let chunkedExpenses = filteredExpenses.chunked { calendar.isDate($0.date, equalTo: $1.date, toGranularity: .month) }
         return chunkedExpenses.map { Array($0) }
     }
     // Editing
@@ -34,38 +40,45 @@ struct ContentView: View {
 
     var body: some View {
         NavigationStack {
-            VStack {
-                Chart {
-                    ForEach(expenses) { expense in
-                        BarMark(
-                            x: .value("Month", expense.date, unit: .month),
-                            y: .value("Amount", expense.value)
-                        )
-                    }
-                }
-                .frame(height: 180)
-                .padding(20)
-
-                Text("Hola mundo")
-            }
             
             List {
-                ForEach(chunkedExpenses, id: \.self) { expenses in
-                    DisclosureGroup {
-                        ForEach(expenses) { expense in
-                            ExpenseCell(expense: expense)
-                                .onTapGesture {
-                                    expenseToEdit = expense
+                if !filteredExpenses.isEmpty {
+                    Section {
+                        VStack {
+                            Chart {
+                                ForEach(filteredExpenses) { expense in
+                                    BarMark(
+                                        x: .value("Month", expense.date, unit: .month),
+                                        y: .value("Amount", expense.value)
+                                    )
                                 }
+                            }
+                            .frame(height: 130)
+                            .padding(20)
+
+                            Text("Hola mundo")
                         }
-                    } label: {
-                        Text(expenses.first!.date.formatted(.dateTime.month(.wide)))
                     }
                 }
-                .onDelete { indexSet in
-                    for index in indexSet {
-                        context.delete(expenses[index])
-                        // We can manualy save the context or just use the built-in auto-save
+
+                Section {
+                    ForEach(chunkedExpenses, id: \.self) { expenses in
+                        DisclosureGroup {
+                            ForEach(expenses) { expense in
+                                ExpenseCell(expense: expense)
+                                    .onTapGesture {
+                                        expenseToEdit = expense
+                                    }
+                            }
+                        } label: {
+                            Text(expenses.first!.date.formatted(.dateTime.month(.wide)))
+                        }
+                    }
+                    .onDelete { indexSet in
+                        for index in indexSet {
+                            context.delete(expenses[index])
+                            // We can manualy save the context or just use the built-in auto-save
+                        }
                     }
                 }
             }
@@ -76,14 +89,14 @@ struct ContentView: View {
                 UpdateExpenseSheet(expense: expense)
             }
             .toolbar {
-                if !expenses.isEmpty {
+                if !filteredExpenses.isEmpty {
                     Button("Add Expense", systemImage: "plus") {
                         isShowingItemSheet = true
                     }
                 }
             }
             .overlay {
-                if expenses.isEmpty {
+                if filteredExpenses.isEmpty {
                     ContentUnavailableView(label: {
                         Label("No Expenses", systemImage: "list.bullet.rectangle.portrait")
                     }, description: {
@@ -103,7 +116,7 @@ struct ContentView: View {
     let container = try! ModelContainer(for: Expense.self, configurations: config)
     for i in 1...12 {
         let randomDouble = Double.random(in: 10...100)
-        let expnese = Expense(title: "Expense \(i)", date: Date.from(year: 2023, month: i, day: 1), value: randomDouble)
+        let expnese = Expense(title: "Expense \(i)", date: Date.from(year: 2024, month: i, day: 1), value: randomDouble)
         container.mainContext.insert(expnese)
     }
 
