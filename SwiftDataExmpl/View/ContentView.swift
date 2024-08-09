@@ -8,7 +8,6 @@
 import SwiftUI
 import SwiftData
 import Algorithms
-import Charts
 
 struct ContentView: View {
 
@@ -40,24 +39,10 @@ struct ContentView: View {
 
     var body: some View {
         NavigationStack {
-            
             List {
                 if !filteredExpenses.isEmpty {
                     Section {
-                        VStack {
-                            Chart {
-                                ForEach(filteredExpenses) { expense in
-                                    BarMark(
-                                        x: .value("Month", expense.date, unit: .month),
-                                        y: .value("Amount", expense.value)
-                                    )
-                                }
-                            }
-                            .frame(height: 130)
-                            .padding(20)
-
-                            Text("Hola mundo")
-                        }
+                        CharView(expenses: filteredExpenses)
                     }
                 }
 
@@ -119,6 +104,5 @@ struct ContentView: View {
         let expnese = Expense(title: "Expense \(i)", date: Date.from(year: 2024, month: i, day: 1), value: randomDouble)
         container.mainContext.insert(expnese)
     }
-
     return ContentView().modelContainer(container)
 }
