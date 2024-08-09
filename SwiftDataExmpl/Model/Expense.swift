@@ -10,12 +10,13 @@ import SwiftData
 
 @Model
 class Expense: Hashable, Identifiable {
-    var id = UUID()
+    var id: UUID
     var title: String
     var date: Date
     var value: Double
 
     init(title: String, date: Date, value: Double) {
+        self.id = UUID()
         self.title = title
         self.date = date
         self.value = value
