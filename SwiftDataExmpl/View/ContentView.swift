@@ -13,29 +13,29 @@ struct ContentView: View {
 
     let calendar = Calendar.current
 
-    // To delete we need access to the context
-    @Environment(\.modelContext) var context
-    @State private var isShowingItemSheet = false
-    // Option 1 Fetch
-//    @Query
-    // Option 2 Fetch sorting
-    @Query(sort: \Expense.date)
-    // Option 3 Fetch filtering
-//    @Query(filter: #Predicate<Expense> { $0.value > 100 }, sort: \Expense.date)
-//    var expenses: [Expense] // not needed anymore = []
-    var expenses: [Expense]
+    @State private var viewModel: ExpenseViewModel
 
+    // TODO: figure out how to move to the viewModel as well
+    // or to a ChartViewModel file
     var filteredExpenses: [Expense] {
         let currentYear = calendar.component(.year, from: .now)
-        return expenses.filter { calendar.component(.year, from: $0.date) == currentYear }
+        return viewModel.expenses.filter { calendar.component(.year, from: $0.date) == currentYear }
     }
-    //
+    // TODO: figure out how to move to the viewModel as well
+    // Algorithms - 'chinked'
     var chunkedExpenses: [[Expense]] {
         let chunkedExpenses = filteredExpenses.chunked { calendar.isDate($0.date, equalTo: $1.date, toGranularity: .month) }
         return chunkedExpenses.map { Array($0) }
     }
+    
+    @State private var isShowingItemSheet = false
     // Editing
     @State private var expenseToEdit: Expense?
+
+    init(modelContext: ModelContext) {
+        let expenseViewModel = ExpenseViewModel(modelContext: modelContext)
+        _viewModel = State(initialValue: expenseViewModel)
+    }
 
     var body: some View {
         NavigationStack {
@@ -60,16 +60,13 @@ struct ContentView: View {
                         }
                     }
                     .onDelete { indexSet in
-                        for index in indexSet {
-                            context.delete(expenses[index])
-                            // We can manualy save the context or just use the built-in auto-save
-                        }
+                        viewModel.deleteAt(indexSet: indexSet)
                     }
                 }
             }
             .navigationTitle("Expenses")
             .navigationBarTitleDisplayMode(.large)
-            .sheet(isPresented: $isShowingItemSheet) { AddExpenseSheet() }
+            .sheet(isPresented: $isShowingItemSheet, onDismiss: { viewModel.fetchAll() }) { AddExpenseSheet().environment(viewModel) }
             .sheet(item: $expenseToEdit) { expense in
                 UpdateExpenseSheet(expense: expense)
             }
@@ -92,6 +89,9 @@ struct ContentView: View {
                     .offset(y: -60)
                 }
             }
+            .onAppear {
+                viewModel.fetchAll()
+            }
         }
     }
 }
@@ -104,5 +104,6 @@ struct ContentView: View {
         let expnese = Expense(title: "Expense \(i)", date: Date.from(year: 2024, month: i, day: 1), value: randomDouble)
         container.mainContext.insert(expnese)
     }
-    return ContentView().modelContainer(container)
+    return ContentView(modelContext: container.mainContext)
+        .modelContainer(container)
 }
