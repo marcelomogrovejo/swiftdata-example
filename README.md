@@ -28,9 +28,9 @@
 </ br>
 
 <p align="center">
-    <img src="screen1.jpg" alt="List" width="300" height="650">
-    <img src="screen2.jpg" alt="Empty" width="300" height="650">
-    <img src="screen3.jpg" alt="DatePicker" width="300" height="650">
+    <img src="screen01.jpg" alt="Empty List" width="300" height="650">
+    <img src="screen02.jpg" alt="New" width="300" height="650">
+    <img src="screen03.jpg" alt="List" width="300" height="650">
 </p>
 
 # Description
