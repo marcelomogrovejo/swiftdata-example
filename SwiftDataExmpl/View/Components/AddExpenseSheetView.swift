@@ -1,5 +1,5 @@
 //
-//  AddExpenseSheet.swift
+//  AddExpenseSheetView.swift
 //  SwiftDataExmpl
 //
 //  Created by Marcelo Mogrovejo on 06/08/2024.
@@ -8,7 +8,7 @@
 import SwiftUI
 import SwiftData
 
-struct AddExpenseSheet: View {
+struct AddExpenseSheetView: View {
     // Add access to the context throught the viewModel
     @Environment(ExpenseViewModel.self) var viewModel
     @Environment(\.dismiss) private var dismiss
@@ -39,7 +39,11 @@ struct AddExpenseSheet: View {
                         // TODO: enabled the button just when validation passes
                         
                         let expense = Expense(title: title, date: date, value: value)
-                        viewModel.new(expense: expense)
+                        do {
+                            try viewModel.new(expense: expense)
+                        } catch {
+                            fatalError("Failed to fetch expenses")
+                        }
 
                         dismiss()
                     }
@@ -50,5 +54,5 @@ struct AddExpenseSheet: View {
 }
 
 #Preview {
-    return AddExpenseSheet()
+    return AddExpenseSheetView()
 }

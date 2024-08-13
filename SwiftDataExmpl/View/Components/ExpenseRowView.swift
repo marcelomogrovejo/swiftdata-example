@@ -1,5 +1,5 @@
 //
-//  ExpenseCell.swift
+//  ExpenseRowView.swift
 //  SwiftDataExmpl
 //
 //  Created by Marcelo Mogrovejo on 06/08/2024.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ExpenseCell: View {
+struct ExpenseRowView: View {
 
     let expense: Expense
 
@@ -22,8 +22,8 @@ struct ExpenseCell: View {
     }
 }
 
-//#Preview {
-//    // Mock
-//    let expense = Expense(title: "Expense A", date: .now, value: 45.0)
-//    ExpenseCell(expense: expense)
-//}
+#Preview {
+    // Mock
+    let expense = Expense(title: "Expense A", date: .now, value: 45.0)
+    return ExpenseRowView(expense: expense)
+}

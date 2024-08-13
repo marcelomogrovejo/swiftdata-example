@@ -37,12 +37,11 @@ extension Date {
     
     /// Get the month from the current date
     ///
-    /// https://stackoverflow.com/questions/53356392/how-to-get-day-and-month-from-date-type-swift-4
-    ///
     /// - Parameters:
     ///   - component: Date component (ie: day, month, year)
     ///   - calendar: Calendar
     /// - Returns: The integer value corresponding to the current month
+    /// > Tip: https://stackoverflow.com/questions/53356392/how-to-get-day-and-month-from-date-type-swift-4
     func get(_ component: Calendar.Component = .month, calendar: Calendar = Calendar.current) -> Int {
         calendar.component(component, from: self)
     }

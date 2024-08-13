@@ -14,9 +14,13 @@ extension NumberFormatter {
     var aussieCurrencyFormatter: NumberFormatter {
         getAussieCurrencyFormatter()
     }
+    
+    /// Returns a decimal formatter to be used as currency
+    ///
+    /// - Returns: A decimal formatter
+    /// > Warning: 'formatter.numberStyle = .currency' does not work.
     private func getAussieCurrencyFormatter() -> NumberFormatter {
         let formatter = NumberFormatter()
-        /// .currency doesn't work
         formatter.numberStyle = .decimal
         formatter.maximumFractionDigits = 2
         formatter.zeroSymbol = ""
