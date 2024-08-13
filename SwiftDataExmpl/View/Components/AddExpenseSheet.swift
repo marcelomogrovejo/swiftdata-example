@@ -27,7 +27,7 @@ struct AddExpenseSheet: View {
                 DatePicker("Date", selection: $date, displayedComponents: .date)
             }
             .navigationTitle("New Expense")
-            .navigationBarTitleDisplayMode(.large)
+            .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItemGroup(placement: .topBarLeading) {
                     Button("Cancel") { dismiss() }
