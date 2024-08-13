@@ -22,7 +22,7 @@ struct UpdateExpenseSheet: View {
                 DatePicker("Date", selection: $expense.date, displayedComponents: .date)
             }
             .navigationTitle("Update Expense")
-            .navigationBarTitleDisplayMode(.large)
+            .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItemGroup(placement: .topBarLeading) {
                     // TODO: validations here
