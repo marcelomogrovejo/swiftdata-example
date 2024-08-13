@@ -28,14 +28,14 @@
 </p>
 
 # Description
-<p>SwiftDataExmpl project is a very simple app which is developed to learn how Swift Data and Algorithms works .<br>
+<p>SwiftDataExmpl project is a very simple app which is developed to learn how Swift Data, Charts and Algorithms works .<br>
 The project consists of a simple list of expenses which the user can delete, edit and create. They are chunked by month and persisted locally.</p>
 
 # Getting started
 1. Make sure you have the Xcode version 14.0 or above installed on your computer.<br>
 2. Download the SwiftDataExmpl project files from the repository.<br>
 3. Open the project files in Xcode.<br>
-4. Make sure the swift-algorithms Swift Packages are downloaded successfully.<br>
+4. Make sure the <strong>swift-algorithms</strong> packages are downloaded successfully.<br>
 5. Run the active scheme.<br>
 
 You should see an empty expenses list on the screen.<br>

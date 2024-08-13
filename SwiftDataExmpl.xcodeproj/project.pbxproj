@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		BD73F7CB2C529C08002B1DAB /* SwiftDataExmplApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD73F7CA2C529C08002B1DAB /* SwiftDataExmplApp.swift */; };
-		BD73F7CD2C529C08002B1DAB /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD73F7CC2C529C08002B1DAB /* ContentView.swift */; };
+		BD73F7CD2C529C08002B1DAB /* ExpenseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD73F7CC2C529C08002B1DAB /* ExpenseView.swift */; };
 		BD73F7CF2C529C0B002B1DAB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BD73F7CE2C529C0B002B1DAB /* Assets.xcassets */; };
 		BD73F7D22C529C0B002B1DAB /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BD73F7D12C529C0B002B1DAB /* Preview Assets.xcassets */; };
 		BD73F7DC2C529C0C002B1DAB /* SwiftDataExmplTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD73F7DB2C529C0C002B1DAB /* SwiftDataExmplTests.swift */; };
@@ -16,10 +16,14 @@
 		BD73F7E82C529C0C002B1DAB /* SwiftDataExmplUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD73F7E72C529C0C002B1DAB /* SwiftDataExmplUITestsLaunchTests.swift */; };
 		BD73F7F52C529C39002B1DAB /* Expense.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD73F7F42C529C39002B1DAB /* Expense.swift */; };
 		BD73F7F72C52AE7C002B1DAB /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = BD73F7F62C52AE7C002B1DAB /* README.md */; };
+		BD8725D12C67D145006E2A5A /* ModelContext+Sqlite3.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD8725D02C67D145006E2A5A /* ModelContext+Sqlite3.swift */; };
 		BDD983802C62184300209C7B /* ExpenseCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD9837F2C62184300209C7B /* ExpenseCell.swift */; };
 		BDD983822C6218EA00209C7B /* AddExpenseSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD983812C6218EA00209C7B /* AddExpenseSheet.swift */; };
 		BDD983842C62192500209C7B /* UpdateExpenseSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD983832C62192500209C7B /* UpdateExpenseSheet.swift */; };
 		BDD983882C6220B500209C7B /* Algorithms in Frameworks */ = {isa = PBXBuildFile; productRef = BDD983872C6220B500209C7B /* Algorithms */; };
+		BDD983912C625A7700209C7B /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD983902C625A7700209C7B /* Date.swift */; };
+		BDD983972C63C64500209C7B /* CharView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD983962C63C64500209C7B /* CharView.swift */; };
+		BDD983992C66781300209C7B /* ExpenseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD983982C66781300209C7B /* ExpenseViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,7 +46,7 @@
 /* Begin PBXFileReference section */
 		BD73F7C72C529C08002B1DAB /* SwiftDataExmpl.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftDataExmpl.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BD73F7CA2C529C08002B1DAB /* SwiftDataExmplApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftDataExmplApp.swift; sourceTree = "<group>"; };
-		BD73F7CC2C529C08002B1DAB /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		BD73F7CC2C529C08002B1DAB /* ExpenseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpenseView.swift; sourceTree = "<group>"; };
 		BD73F7CE2C529C0B002B1DAB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BD73F7D12C529C0B002B1DAB /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		BD73F7D72C529C0C002B1DAB /* SwiftDataExmplTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftDataExmplTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -52,11 +56,15 @@
 		BD73F7E72C529C0C002B1DAB /* SwiftDataExmplUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftDataExmplUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		BD73F7F42C529C39002B1DAB /* Expense.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Expense.swift; sourceTree = "<group>"; };
 		BD73F7F62C52AE7C002B1DAB /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		BD8725D02C67D145006E2A5A /* ModelContext+Sqlite3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ModelContext+Sqlite3.swift"; sourceTree = "<group>"; };
 		BDD9837F2C62184300209C7B /* ExpenseCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpenseCell.swift; sourceTree = "<group>"; };
 		BDD983812C6218EA00209C7B /* AddExpenseSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddExpenseSheet.swift; sourceTree = "<group>"; };
 		BDD983832C62192500209C7B /* UpdateExpenseSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateExpenseSheet.swift; sourceTree = "<group>"; };
 		BDD983892C62247300209C7B /* TODO.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = TODO.md; sourceTree = "<group>"; };
 		BDD9838A2C62247E00209C7B /* LICENSE.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = LICENSE.md; sourceTree = "<group>"; };
+		BDD983902C625A7700209C7B /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
+		BDD983962C63C64500209C7B /* CharView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharView.swift; sourceTree = "<group>"; };
+		BDD983982C66781300209C7B /* ExpenseViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpenseViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,6 +120,7 @@
 		BD73F7C92C529C08002B1DAB /* SwiftDataExmpl */ = {
 			isa = PBXGroup;
 			children = (
+				BDD9838F2C625A6500209C7B /* Extension */,
 				BDD9838E2C6240D300209C7B /* ViewModel */,
 				BDD9838D2C6240CA00209C7B /* View */,
 				BDD9838B2C6240A800209C7B /* Model */,
@@ -168,6 +177,7 @@
 				BDD9837F2C62184300209C7B /* ExpenseCell.swift */,
 				BDD983812C6218EA00209C7B /* AddExpenseSheet.swift */,
 				BDD983832C62192500209C7B /* UpdateExpenseSheet.swift */,
+				BDD983962C63C64500209C7B /* CharView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -176,7 +186,7 @@
 			isa = PBXGroup;
 			children = (
 				BDD9838C2C6240B300209C7B /* Components */,
-				BD73F7CC2C529C08002B1DAB /* ContentView.swift */,
+				BD73F7CC2C529C08002B1DAB /* ExpenseView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -184,8 +194,18 @@
 		BDD9838E2C6240D300209C7B /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				BDD983982C66781300209C7B /* ExpenseViewModel.swift */,
 			);
 			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		BDD9838F2C625A6500209C7B /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				BDD983902C625A7700209C7B /* Date.swift */,
+				BD8725D02C67D145006E2A5A /* ModelContext+Sqlite3.swift */,
+			);
+			path = Extension;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -326,8 +346,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				BDD983802C62184300209C7B /* ExpenseCell.swift in Sources */,
+				BD8725D12C67D145006E2A5A /* ModelContext+Sqlite3.swift in Sources */,
+				BDD983992C66781300209C7B /* ExpenseViewModel.swift in Sources */,
 				BD73F7F52C529C39002B1DAB /* Expense.swift in Sources */,
-				BD73F7CD2C529C08002B1DAB /* ContentView.swift in Sources */,
+				BDD983972C63C64500209C7B /* CharView.swift in Sources */,
+				BDD983912C625A7700209C7B /* Date.swift in Sources */,
+				BD73F7CD2C529C08002B1DAB /* ExpenseView.swift in Sources */,
 				BDD983842C62192500209C7B /* UpdateExpenseSheet.swift in Sources */,
 				BD73F7CB2C529C08002B1DAB /* SwiftDataExmplApp.swift in Sources */,
 				BDD983822C6218EA00209C7B /* AddExpenseSheet.swift in Sources */,

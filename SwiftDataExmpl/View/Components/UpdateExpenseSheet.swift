@@ -11,7 +11,7 @@ struct UpdateExpenseSheet: View {
     @Environment(\.dismiss) private var dismiss
 
     @Bindable var expense: Expense
-    
+
     var body: some View {
         NavigationStack {
             Form {
