@@ -7,32 +7,21 @@
 
 import SwiftUI
 import SwiftData
-import Algorithms
 
-struct ContentView: View {
-
-    let calendar = Calendar.current
+struct ExpenseView: View {
 
     @State private var viewModel: ExpenseViewModel
 
-    // TODO: figure out how to move to the viewModel as well
-    // or to a ChartViewModel file
-    var filteredExpenses: [Expense] {
-        let currentYear = calendar.component(.year, from: .now)
-        return viewModel.expenses.filter { calendar.component(.year, from: $0.date) == currentYear }
-    }
-    // TODO: figure out how to move to the viewModel as well
-    // Algorithms - 'chinked'
-    var chunkedExpenses: [[Expense]] {
-        let chunkedExpenses = filteredExpenses.chunked { calendar.isDate($0.date, equalTo: $1.date, toGranularity: .month) }
-        return chunkedExpenses.map { Array($0) }
-    }
-    
+    // TODO: move to viewModel ??
     @State private var isShowingItemSheet = false
     // Editing
     @State private var expenseToEdit: Expense?
 
     init(modelContext: ModelContext) {
+        #if DEBUG
+        print(modelContext.sqliteCommand)
+        #endif
+
         let expenseViewModel = ExpenseViewModel(modelContext: modelContext)
         _viewModel = State(initialValue: expenseViewModel)
     }
@@ -40,27 +29,29 @@ struct ContentView: View {
     var body: some View {
         NavigationStack {
             List {
-                if !filteredExpenses.isEmpty {
+                /// Chart section
+                if !viewModel.filteredExpenses.isEmpty {
                     Section {
-                        CharView(expenses: filteredExpenses)
+                        CharView(expenses: viewModel.filteredExpenses)
                     }
                 }
 
+                /// Expenses section
                 Section {
-                    ForEach(chunkedExpenses, id: \.self) { expenses in
+                    ForEach(viewModel.chunkedExpenses.indices, id: \.self) { sectionIndex in
                         DisclosureGroup {
-                            ForEach(expenses) { expense in
+                            ForEach(viewModel.chunkedExpenses[sectionIndex], id: \.id) { expense in
                                 ExpenseCell(expense: expense)
                                     .onTapGesture {
                                         expenseToEdit = expense
                                     }
                             }
+                            .onDelete { indexSet in
+                                viewModel.deleteAt(sectionIndex: sectionIndex, indexSet: indexSet)
+                            }
                         } label: {
-                            Text(expenses.first!.date.formatted(.dateTime.month(.wide)))
+                            Text(viewModel.chunkedExpenses[sectionIndex][0].date.formatted(.dateTime.month(.wide)))
                         }
-                    }
-                    .onDelete { indexSet in
-                        viewModel.deleteAt(indexSet: indexSet)
                     }
                 }
             }
@@ -71,14 +62,14 @@ struct ContentView: View {
                 UpdateExpenseSheet(expense: expense)
             }
             .toolbar {
-                if !filteredExpenses.isEmpty {
+                if !viewModel.filteredExpenses.isEmpty {
                     Button("Add Expense", systemImage: "plus") {
                         isShowingItemSheet = true
                     }
                 }
             }
             .overlay {
-                if filteredExpenses.isEmpty {
+                if viewModel.filteredExpenses.isEmpty {
                     ContentUnavailableView(label: {
                         Label("No Expenses", systemImage: "list.bullet.rectangle.portrait")
                     }, description: {
@@ -89,9 +80,11 @@ struct ContentView: View {
                     .offset(y: -60)
                 }
             }
-            .onAppear {
+            .onAppear() {
                 viewModel.fetchAll()
             }
+            .padding(.top, 20)
+            .padding(.bottom, 20)
         }
     }
 }
@@ -104,6 +97,6 @@ struct ContentView: View {
         let expnese = Expense(title: "Expense \(i)", date: Date.from(year: 2024, month: i, day: 1), value: randomDouble)
         container.mainContext.insert(expnese)
     }
-    return ContentView(modelContext: container.mainContext)
+    return ExpenseView(modelContext: container.mainContext)
         .modelContainer(container)
 }

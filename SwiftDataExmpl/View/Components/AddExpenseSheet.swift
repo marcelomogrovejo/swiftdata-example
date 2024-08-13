@@ -9,8 +9,7 @@ import SwiftUI
 import SwiftData
 
 struct AddExpenseSheet: View {
-    // Add access to the context
-//    @Environment(\.modelContext) var context
+    // Add access to the context throught the viewModel
     @Environment(ExpenseViewModel.self) var viewModel
     @Environment(\.dismiss) private var dismiss
 
@@ -37,17 +36,6 @@ struct AddExpenseSheet: View {
                     Button("Save") {
                         // TODO: field validatations here
                         let expense = Expense(title: title, date: date, value: value)
-                        // Add the model to the context
-//                        context.insert(expense)
-
-                        // One way to save: manualy
-//                        do {
-//                            try context.save()
-//                        } catch {
-//                            print("Error saving the context")
-//                        }
-                        // Other way to save: just using the built-in auto-save
-
                         viewModel.new(expense: expense)
 
                         dismiss()

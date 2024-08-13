@@ -21,11 +21,11 @@ struct CharView: View {
             
             Chart {
                 /// Dot line behind the bars
-                RuleMark(y: .value("Goal", 80))
+                RuleMark(y: .value("Limit", 80))
                     .foregroundStyle(Color.mint)
                     .lineStyle(StrokeStyle(lineWidth: 1, dash: [5]))
 //                    .annotation(alignment: .leading) {
-//                        Text("Goal")
+//                        Text("Limit")
 //                            .font(.caption)
 //                            .foregroundStyle(Color.mint)
 //                    }
@@ -68,7 +68,7 @@ struct CharView: View {
                 Image(systemName: "line.diagonal")
                     .rotationEffect(Angle(degrees: 45))
                     .foregroundColor(.mint)
-                Text("Montly goal")
+                Text("Montly limit")
                     .foregroundStyle(Color.secondary)
                     .font(.footnote)
             }

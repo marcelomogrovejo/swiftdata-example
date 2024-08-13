@@ -9,7 +9,8 @@ import Foundation
 import SwiftData
 
 @Model
-class Expense: Hashable, Identifiable {
+class Expense: Hashable, Identifiable {    
+    @Attribute(.unique)
     var id: UUID
     var title: String
     var date: Date
