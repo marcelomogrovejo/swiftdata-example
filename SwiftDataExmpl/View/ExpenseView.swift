@@ -32,26 +32,36 @@ struct ExpenseView: View {
                 /// Chart section
                 if !viewModel.filteredExpenses.isEmpty {
                     Section {
-                        CharView(expenses: viewModel.filteredExpenses)
+//                        CharView(expenses: viewModel.filteredExpenses)
+                        CharView(expenses: viewModel.expenses)
                     }
                 }
 
                 /// Expenses section
                 Section {
-                    ForEach(viewModel.chunkedExpenses.indices, id: \.self) { sectionIndex in
-                        DisclosureGroup {
-                            ForEach(viewModel.chunkedExpenses[sectionIndex], id: \.id) { expense in
-                                ExpenseCell(expense: expense)
-                                    .onTapGesture {
-                                        expenseToEdit = expense
-                                    }
+//                    ForEach(viewModel.chunkedExpenses.indices, id: \.self) { sectionIndex in
+//                        DisclosureGroup {
+//                            ForEach(viewModel.chunkedExpenses[sectionIndex], id: \.id) { expense in
+//                                ExpenseCell(expense: expense)
+//                                    .onTapGesture {
+//                                        expenseToEdit = expense
+//                                    }
+//                            }
+//                            .onDelete { indexSet in
+//                                viewModel.deleteAt(sectionIndex: sectionIndex, indexSet: indexSet)
+//                            }
+//                        } label: {
+//                            Text(viewModel.chunkedExpenses[sectionIndex][0].date.formatted(.dateTime.month(.wide)))
+//                        }
+//                    }
+                    ForEach(viewModel.expenses, id: \.id) { expense in
+                        ExpenseCell(expense: expense)
+                            .onTapGesture {
+                                expenseToEdit = expense
                             }
-                            .onDelete { indexSet in
-                                viewModel.deleteAt(sectionIndex: sectionIndex, indexSet: indexSet)
-                            }
-                        } label: {
-                            Text(viewModel.chunkedExpenses[sectionIndex][0].date.formatted(.dateTime.month(.wide)))
-                        }
+                    }
+                    .onDelete { indexSet in
+                        viewModel.deleteExpenseAt(indexSet: indexSet)
                     }
                 }
             }
