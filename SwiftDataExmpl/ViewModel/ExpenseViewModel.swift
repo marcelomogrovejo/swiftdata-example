@@ -29,7 +29,7 @@ class ExpenseViewModel {
     
     private let calendar = Calendar.current
     private var modelContext: ModelContext
-    private var expenses: [Expense] = []
+    /*private*/ var expenses: [Expense] = []
 
     // or to a ChartViewModel file
     var filteredExpenses: [Expense] {
@@ -53,7 +53,9 @@ class ExpenseViewModel {
         do {
             let descriptor = FetchDescriptor<Expense>(sortBy: [SortDescriptor(\.date)])
             expenses = try modelContext.fetch(descriptor)
-            print(expenses)
+            for expense in expenses {
+                print(expense.title)
+            }
         } catch {
             print("fatal error: \(error.localizedDescription)")
         }
@@ -65,7 +67,6 @@ class ExpenseViewModel {
     ///   - sectionIndex: <#sectionIndex description#>
     ///   - indexSet: <#indexSet description#>
     func deleteAt(sectionIndex: Int, indexSet: IndexSet) {
-        
         print("sectionIndex: \(sectionIndex)")
         for index in indexSet {
             print("idx: \(index)")
@@ -92,10 +93,30 @@ class ExpenseViewModel {
             }
         }
     }
-    
+
+    /// Removes an expense on the given location
+    ///
+    /// - Parameter indexSet: Table items location
+    func deleteExpenseAt(indexSet: IndexSet) {
+        for index in indexSet {
+            print("idx: \(index)")
+            print("expense: \(expenses[index].title)")
+            modelContext.delete(expenses[index])
+
+            do {
+                try modelContext.save()
+
+                /// List is refreshed however if fetchAll() is not here, chart is never refreshed.
+                fetchAll()
+            } catch {
+                print("Fatal error deleting expense: \(error.localizedDescription)")
+            }
+        }
+    }
+
     /// Add a new expense
     /// 
-    /// - Parameter expense: <#expense description#>
+    /// - Parameter expense: The expense model to be added
     func new(expense: Expense) {
         modelContext.insert(expense)
         do {
@@ -104,5 +125,5 @@ class ExpenseViewModel {
             print("Error saving the context: \(error.localizedDescription)")
         }
     }
-    
+
 }
