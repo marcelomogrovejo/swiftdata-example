@@ -26,22 +26,22 @@ class ExpenseViewModel {
     //    var expenses: [Expense] // not needed anymore = []
     //    var expenses: [Expense]
     /// //
-    
-    private let calendar = Calendar.current
+
     private var modelContext: ModelContext
-    /*private*/ var expenses: [Expense] = []
-
-    // or to a ChartViewModel file
-    var filteredExpenses: [Expense] {
-        let currentYear = calendar.component(.year, from: .now)
-        return expenses.filter { calendar.component(.year, from: $0.date) == currentYear }
+    private var expenses: [Expense] = [] {
+        didSet {
+            filteredExpenses = filterExpenses(expenses)
+        }
     }
 
-    // Algorithms - 'chunked'
-    var chunkedExpenses: [[Expense]] {
-        let chunkedExpenses = filteredExpenses.chunked { calendar.isDate($0.date, equalTo: $1.date, toGranularity: .month) }
-        return chunkedExpenses.map { Array($0) }
+    // TODO: Move to a ChartViewModel file ??
+    var filteredExpenses: [Expense] = [] {
+        didSet {
+            chunkedExpenses = chunkExpenses(filteredExpenses)
+        }
     }
+
+    var chunkedExpenses: [[Expense]] = []
 
     init(modelContext: ModelContext) {
         self.modelContext = modelContext
@@ -49,13 +49,10 @@ class ExpenseViewModel {
 
     /// Retrieves all the expenses
     ///
-    func fetchAll() {
+    func fetchAll() throws {
         do {
             let descriptor = FetchDescriptor<Expense>(sortBy: [SortDescriptor(\.date)])
             expenses = try modelContext.fetch(descriptor)
-            for expense in expenses {
-                print(expense.title)
-            }
         } catch {
             print("fatal error: \(error.localizedDescription)")
         }
@@ -64,28 +61,22 @@ class ExpenseViewModel {
     /// Removes an expense
     ///
     /// - Parameters:
-    ///   - sectionIndex: <#sectionIndex description#>
-    ///   - indexSet: <#indexSet description#>
-    func deleteAt(sectionIndex: Int, indexSet: IndexSet) {
-        print("sectionIndex: \(sectionIndex)")
+    ///   - sectionIndex: Table section location
+    ///   - indexSet: Table items location
+    ///  
+    /// > Tip: https://stackoverflow.com/questions/77120576/how-do-i-delete-child-items-from-list-with-swiftdata
+    func deleteAt(sectionIndex: Int, indexSet: IndexSet) throws {
         for index in indexSet {
-            print("idx: \(index)")
-
             do {
-                let expenseToDelete = chunkedExpenses[sectionIndex][index]
-                print(expenseToDelete.title)
+                let expenseToDeleteId = chunkedExpenses[sectionIndex][index].persistentModelID
+                let expenseToDelete = modelContext.model(for: expenseToDeleteId)
                 modelContext.delete(expenseToDelete)
+
+                expenses.removeAll()
+
                 do {
                     try modelContext.save()
-
-                    
-                    // TODO: it is updating the expenses array but some way it is not refreshing filteredExpenses and chunkedExpenses
-                    // Option 1: remove filtered and chunked and try to make it work just to expenses. Then, when it is working as
-                    // expected, implement filtered and chunked.
-                    
-                    // TODO: figure out if it is needed to fetchAll() here. Confirm if there is another way to refresh the context.
-                    
-                    fetchAll()
+                    try fetchAll()
                 } catch {
                     print("Error deleting expense model: \(error.localizedDescription)")
                     // Handle error
@@ -97,17 +88,17 @@ class ExpenseViewModel {
     /// Removes an expense on the given location
     ///
     /// - Parameter indexSet: Table items location
-    func deleteExpenseAt(indexSet: IndexSet) {
+    ///
+    /// > Warning: It is used just when expenses array is flat array, not a chunked one.
+    func deleteExpenseAt(indexSet: IndexSet) throws {
         for index in indexSet {
-            print("idx: \(index)")
-            print("expense: \(expenses[index].title)")
             modelContext.delete(expenses[index])
 
             do {
                 try modelContext.save()
 
                 /// List is refreshed however if fetchAll() is not here, chart is never refreshed.
-                fetchAll()
+                try fetchAll()
             } catch {
                 print("Fatal error deleting expense: \(error.localizedDescription)")
             }
@@ -117,13 +108,36 @@ class ExpenseViewModel {
     /// Add a new expense
     /// 
     /// - Parameter expense: The expense model to be added
-    func new(expense: Expense) {
+    func new(expense: Expense) throws {
         modelContext.insert(expense)
         do {
             try modelContext.save()
         } catch {
             print("Error saving the context: \(error.localizedDescription)")
         }
+    }
+
+    // MARK: - Private
+
+    /// Filters an array of expenses by the current year
+    ///
+    /// - Parameter expenses: An array of expenses
+    /// - Returns: A filtered by year array of expenses
+    private func filterExpenses(_ expenses: [Expense]) -> [Expense] {
+        let currentYear = Calendar.current.component(.year, from: .now)
+        return expenses.filter { Calendar.current.component(.year, from: $0.date) == currentYear }
+    }
+
+    /// Chunks an array of expenses
+    ///
+    /// - Parameter expenses: An array of expenses
+    /// - Returns: An array of arrays
+    ///
+    /// > Important: It implements 'chunked' from Swift Algorithms
+    private func chunkExpenses(_ expenses: [Expense]) -> [[Expense]] {
+        let chunkedExpenses = expenses.chunked { Calendar.current.isDate($0.date, equalTo: $1.date, toGranularity: .month) }
+        let chunkedExpensesToReturn = chunkedExpenses.map { Array($0) }
+        return chunkedExpensesToReturn
     }
 
 }

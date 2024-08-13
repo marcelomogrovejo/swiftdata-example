@@ -1,5 +1,5 @@
 //
-//  AddExpenseSheet.swift
+//  AddExpenseSheetView.swift
 //  SwiftDataExmpl
 //
 //  Created by Marcelo Mogrovejo on 06/08/2024.
@@ -8,25 +8,26 @@
 import SwiftUI
 import SwiftData
 
-struct AddExpenseSheet: View {
+struct AddExpenseSheetView: View {
     // Add access to the context throught the viewModel
     @Environment(ExpenseViewModel.self) var viewModel
     @Environment(\.dismiss) private var dismiss
 
     @State private var title: String = ""
-    @State private var date: Date = .now
     @State private var value: Double = 0
+    @State private var date: Date = .now
 
     var body: some View {
         NavigationStack {
             Form {
                 TextField("Expense name", text: $title)
-                DatePicker("Date", selection: $date, displayedComponents: .date)
-                TextField("Value", value: $value, format: .currency(code: "AUD"))
+                    .disableAutocorrection(true)
+                TextField("0,00", value: $value, formatter: NumberFormatter().aussieCurrencyFormatter)
                     .keyboardType(.decimalPad)
+                DatePicker("Date", selection: $date, displayedComponents: .date)
             }
             .navigationTitle("New Expense")
-            .navigationBarTitleDisplayMode(.large)
+            .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItemGroup(placement: .topBarLeading) {
                     Button("Cancel") { dismiss() }
@@ -35,8 +36,14 @@ struct AddExpenseSheet: View {
                 ToolbarItemGroup(placement: .topBarTrailing) {
                     Button("Save") {
                         // TODO: field validatations here
+                        // TODO: enabled the button just when validation passes
+                        
                         let expense = Expense(title: title, date: date, value: value)
-                        viewModel.new(expense: expense)
+                        do {
+                            try viewModel.new(expense: expense)
+                        } catch {
+                            fatalError("Failed to fetch expenses")
+                        }
 
                         dismiss()
                     }
@@ -47,5 +54,5 @@ struct AddExpenseSheet: View {
 }
 
 #Preview {
-    return AddExpenseSheet()
+    return AddExpenseSheetView()
 }
