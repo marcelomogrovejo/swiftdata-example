@@ -29,50 +29,42 @@ struct ExpenseView: View {
     var body: some View {
         NavigationStack {
 
-//            Spacer()
-
             VStack(alignment: .center) {
                 /// Chart section
                 if !viewModel.filteredExpenses.isEmpty {
-                    //                        CharView(expenses: viewModel.filteredExpenses)
+                    ChartView(expenses: viewModel.filteredExpenses)
 
-                    VStack {
-                        CharView(expenses: viewModel.expenses)
-                            .padding()
-                            .background(Color(uiColor: .secondarySystemGroupedBackground))
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 8.0)
-                                    .stroke(Color(uiColor: .systemGroupedBackground), lineWidth: 5)
-                            )
-                    }
-                    .padding(.top, 20)
-                    .padding(.horizontal, 20)
+                    /** WORKS with a flat expenses array! */
+//                        ChartView(expenses: viewModel.expenses)
                 }
 
                 List {
                     /// Expenses section
                     Section {
-                        
-                        // TODO: Something interesting that can help here:
-                        // https://stackoverflow.com/questions/77120576/how-do-i-delete-child-items-from-list-with-swiftdata
-                        
-                        //                    ForEach(viewModel.chunkedExpenses.indices, id: \.self) { sectionIndex in
-                        //                        DisclosureGroup {
-                        //                            ForEach(viewModel.chunkedExpenses[sectionIndex], id: \.id) { expense in
-                        //                                ExpenseCell(expense: expense)
-                        //                                    .onTapGesture {
-                        //                                        expenseToEdit = expense
-                        //                                    }
-                        //                            }
-                        //                            .onDelete { indexSet in
-                        //                                viewModel.deleteAt(sectionIndex: sectionIndex, indexSet: indexSet)
-                        //                            }
-                        //                        } label: {
-                        //                            Text(viewModel.chunkedExpenses[sectionIndex][0].date.formatted(.dateTime.month(.wide)))
-                        //                        }
-                        //                    }
+                        ForEach(viewModel.chunkedExpenses.indices, id: \.self) { sectionIndex in
+                            DisclosureGroup {
+                                ForEach(viewModel.chunkedExpenses[sectionIndex], id: \.id) { expense in
+                                    ExpenseRowView(expense: expense)
+                                        .onTapGesture {
+                                            expenseToEdit = expense
+                                        }
+                                }
+                                .onDelete { indexSet in
+                                    do {
+                                        try viewModel.deleteAt(sectionIndex: sectionIndex, indexSet: indexSet)
+                                    } catch {
+                                        fatalError("Failed to delete expenses")
+                                    }
+                                }
+                            } label: {
+                                Text(viewModel.chunkedExpenses[sectionIndex][0].date.formatted(.dateTime.month(.wide)))
+                            }
+                        }
+
+                        /** WORKS with a flat expenses array! */
+                        /*
                         ForEach(viewModel.expenses, id: \.id) { expense in
-                            ExpenseCell(expense: expense)
+                            ExpenseRowView(expense: expense)
                                 .onTapGesture {
                                     expenseToEdit = expense
                                 }
@@ -80,13 +72,21 @@ struct ExpenseView: View {
                         .onDelete { indexSet in
                             viewModel.deleteExpenseAt(indexSet: indexSet)
                         }
+                         */
                     }
                 }
                 .navigationTitle("Expenses")
                 .navigationBarTitleDisplayMode(.large)
-                .sheet(isPresented: $isShowingItemSheet, onDismiss: { viewModel.fetchAll() }) { AddExpenseSheet().environment(viewModel) }
+                .sheet(isPresented: $isShowingItemSheet, onDismiss: {
+                    do {
+                        try viewModel.fetchAll()
+                    } catch {
+                        fatalError("Failed to fetch expenses")
+                    }}) {
+                        AddExpenseSheetView().environment(viewModel)
+                    }
                 .sheet(item: $expenseToEdit) { expense in
-                    UpdateExpenseSheet(expense: expense)
+                    UpdateExpenseSheetView(expense: expense)
                 }
                 .toolbar {
                     if !viewModel.filteredExpenses.isEmpty {
@@ -96,7 +96,7 @@ struct ExpenseView: View {
                     }
                 }
                 .overlay {
-                    if viewModel.filteredExpenses.isEmpty {
+                    if viewModel.chunkedExpenses.isEmpty {
                         ContentUnavailableView(label: {
                             Label("No Expenses", systemImage: "list.bullet.rectangle.portrait")
                         }, description: {
@@ -108,7 +108,11 @@ struct ExpenseView: View {
                     }
                 }
                 .onAppear() {
-                    viewModel.fetchAll()
+                    do {
+                        try viewModel.fetchAll()
+                    } catch {
+                        fatalError("Failed to fetch expenses")
+                    }
                 }
             }
             .background(Color(uiColor: .systemGroupedBackground))

@@ -1,5 +1,5 @@
 //
-//  UpdateExpenseSheet.swift
+//  UpdateExpenseSheetView.swift
 //  SwiftDataExmpl
 //
 //  Created by Marcelo Mogrovejo on 06/08/2024.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct UpdateExpenseSheet: View {
+struct UpdateExpenseSheetView: View {
     @Environment(\.dismiss) private var dismiss
 
     @Bindable var expense: Expense
@@ -35,5 +35,5 @@ struct UpdateExpenseSheet: View {
 
 #Preview {
     let expense = Expense(title: "Expense A", date: .now, value: 45.0)
-    return UpdateExpenseSheet(expense: expense)
+    return UpdateExpenseSheetView(expense: expense)
 }
