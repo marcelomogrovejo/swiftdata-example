@@ -28,8 +28,8 @@
 </ br>
 
 <p align="center">
-    <img src="screen01.jpg" alt="Empty List" width="300" height="650">
-    <img src="screen02.jpg" alt="New" width="300" height="650">
+    <img src="screen01.jpg" alt="Empty List" width="300" height="650">&nbsp;
+    <img src="screen02.jpg" alt="New" width="300" height="650">&nbsp;
     <img src="screen03.jpg" alt="List" width="300" height="650">
 </p>
 
