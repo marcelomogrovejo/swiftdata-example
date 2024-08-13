@@ -17,19 +17,25 @@
 
 # SwiftDataExmpl
 
-<br />
 <p align="center">
-  <a href="https://github.com/marcelomogrovejo/todo-swiftui/">
+  <a href="https://github.com/marcelomogrovejo/swiftdata-example/">
     <img src="expenses-logo.png" alt="Logo" width="80" height="80">
   </a>
   <p align="center">
     A simple project that handle user expenses
   </p>
 </p>
+</ br>
+
+<p align="center">
+    <img src="expenses-logo.png" alt="Logo" width="80" height="80">
+    <img src="expenses-logo.png" alt="Logo" width="80" height="80">
+    <img src="expenses-logo.png" alt="Logo" width="80" height="80">
+</p>
 
 # Description
-<p>SwiftDataExmpl project is a very simple app which is developed to learn how Swift Data, Charts and Algorithms works .<br>
-The project consists of a simple list of expenses which the user can delete, edit and create. They are chunked by month and persisted locally.</p>
+<p>SwiftDataExmpl project is a very simple app which is developed to learn how SwiftData, Charts and Algorithms works all together.<br>
+The project consists of a simple list of expenses which the user can add update and delete. They are chunked by month and persisted locally.</p>
 
 # Getting started
 1. Make sure you have the Xcode version 14.0 or above installed on your computer.<br>
@@ -42,7 +48,7 @@ You should see an empty expenses list on the screen.<br>
 You should see a main button that allows you to add the first expense to the list.<br>
 
 # Usage
-In order to start managing expenses, you should tap on the plus button "+" on the top right of the screen, which will take you to an empty form.<br>
+In order to start managing your expenses, you should tap on the plus button "+" on the top right of the screen, which will take you to an empty form.<br>
 There you can fill the expense form and tap on the "Save" button on the top right of the screen to save and close the form.<br>
 Once the new expense is added you can see it on the list.<br>
 In order to edit an existing expense you should tap on it.<br>
@@ -54,11 +60,11 @@ In order to delete an expense you should swipe left the list item and tap the re
 * Model has any necessary data structure needed to generate the expense.
 * ViewModel is bridge between the Model and the View. It provides data and behavior to the View, allowing it to bind directly to the ViewModel properties and commands.
 * View is responsible for displaying the user interface to the end user. It receives input from the user and presents the data provided by the ViewModel.
-* Project implements a local Swift Data database.<br><br>
+* Project implements a local SwiftData sql3 database.<br><br>
 
 # Structure
 <p>🚧 In construction 🚧</p> 
-* "ViewModel": .
+* "ViewModel": View logic that handled user data and refresh user interface.
 * "View": User interfaces like main view.
 * "Components": Sub views that main view includes like add and update sheets.
 * "Model": Entities needed by the app like expenses.
